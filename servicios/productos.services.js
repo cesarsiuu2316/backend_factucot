@@ -27,11 +27,11 @@ const getProductoById = (id) => {
 };
 
 const createProducto = (productoData) => {
-    const { url, nombre, precio, descripcion } = productoData;
+    const { url, nombre, precio, descripcion, categoria, subcategoria, marca } = productoData;
     return new Promise((resolve, reject) => {
         db.query(
-            'INSERT INTO producto (url, nombre, precio, descripcion) VALUES (?, ?, ?, ?)',
-            [url, nombre, precio, descripcion],
+            'INSERT INTO producto (url, nombre, precio, descripcion, categoria, subcategoria, marca) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [url, nombre, precio, descripcion, categoria, subcategoria, marca],
             (err, results) => {
                 if (err) {
                     reject(err);
@@ -44,11 +44,11 @@ const createProducto = (productoData) => {
 };
 
 const updateProducto = (id, productoData) => {
-    const { url, nombre, precio, descripcion } = productoData;
+    const { url, nombre, precio, descripcion, categoria, subcategoria, marca } = productoData;
     return new Promise((resolve, reject) => {
         db.query(
-            'UPDATE producto SET url = ?, nombre = ?, precio = ?, descripcion = ? WHERE id_producto = ?',
-            [url, nombre, precio, descripcion, id],
+            'UPDATE producto SET url = ?, nombre = ?, precio = ?, descripcion = ?, categoria = ?, subcategoria = ?, marca = ? WHERE id_producto = ?',
+            [url, nombre, precio, descripcion, categoria, subcategoria, marca, id],
             (err, results) => {
                 if (err) {
                     reject(err);
