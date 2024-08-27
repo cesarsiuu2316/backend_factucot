@@ -19,6 +19,7 @@ const getProductoById = async (req, res) => {
             res.status(404).send('Producto no encontrado');
         }
     } catch (err) {
+        console.error('Error fetching producto:', err);
         res.status(500).send(err.message);
     }
 };
