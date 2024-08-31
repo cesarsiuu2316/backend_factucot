@@ -2,7 +2,7 @@ const db= require("../db")
 
 const getAllUsers = () => {
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM user', (err, results) => {
+        db.query('SELECT * FROM "user"', (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -14,13 +14,13 @@ const getAllUsers = () => {
 
 const getUserbyId= (Id) =>{
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM user WHERE id_user = ?',[Id], (err, results) => {
+        db.query('SELECT * FROM "user" WHERE id_user = $1',[Id], (err, result) => {
             if (err) {
                 reject(err);
-            } else if(results.lengths===0){
+            } else if(result.rows.lengths===0){
                resolve(null);
             }else {
-                resolve(results);
+                resolve(result);
             }
         });
     });
@@ -28,13 +28,13 @@ const getUserbyId= (Id) =>{
 
 const getUserByUsername= (usuario) =>{
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM user WHERE usuario = ?',[usuario], (err, results) => {
+        db.query('SELECT * FROM "user" WHERE usuario = $1',[usuario], (err, result) => {
             if (err) {
                 reject(err);
-            } else if(results.lengths===0){
+            } else if(result.rows.lengths===0){
                resolve(null);
             }else {
-                resolve(results);
+                resolve(result);
             }
         });
     });
@@ -42,14 +42,15 @@ const getUserByUsername= (usuario) =>{
 
 const loginUser = (usuario, password) => {
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM user WHERE usuario = ? AND contraseña = ?', [usuario, password], 
-        (err, results) => {
+        db.query('SELECT * FROM "user" WHERE usuario = $1 AND contraseña = $2', [usuario, password], 
+        (err, result) => {
             if (err) {
                 reject(err);
-            } else if (results.length === 0) {
+            } else if (result.rows.length === 0) {
                 resolve(null);
+                console.log("found user");
             } else {
-                resolve(results); 
+                resolve(result.rows[0]); 
             }
         });
     });
@@ -57,8 +58,8 @@ const loginUser = (usuario, password) => {
 
 const CreateUser = (usuario,password,Nombre) =>{
     return new Promise((resolve, reject) => {
-        db.query('INSERT INTO user(usuario,Nombre,contraseña,rol) VALUES(?,?,?,?)', [usuario, password, Nombre, 2], 
-        (err, results) => {
+        db.query('INSERT INTO "user"(usuario,contraseña,nombre,rol) VALUES($1,$2,$3,$4)', [usuario, password, Nombre, 2], 
+        (err, result) => {
             if (err) {
                 reject(err);
             } else {
