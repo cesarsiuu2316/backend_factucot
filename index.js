@@ -5,6 +5,7 @@ const userRoutes = require('./rutas/user.routes');
 const cotizacionRoutes = require('./rutas/cotizacion.routes');
 const facturaRoutes = require('./rutas/factura.routes');
 const productoRoutes = require('./rutas/producto.routes');
+const listaRoutes = require('./rutas/lista.routes.js');
 
 const app=express()
 app.use(cors());
@@ -17,6 +18,8 @@ app.use(cotizacionRoutes);
 app.use(facturaRoutes);
 //RUTAS APIS PRODUCTO
 app.use(productoRoutes);
+//RUTAS APIS LISTA
+app.use(listaRoutes);
 
 app.listen(3000,()=>{
     console.log("server has started on port 3000")
