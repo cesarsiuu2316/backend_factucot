@@ -69,10 +69,23 @@ const CreateUser = (usuario,password,Nombre) =>{
     });
 };
 
+const deleteUser = (id) => {
+    return new Promise((resolve, reject) => {
+        db.query('DELETE FROM "user" WHERE id_user = $1', [id], (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rowCount);
+            }
+        });
+    });
+};
+
 module.exports={
     getAllUsers,
     getUserbyId,
     getUserByUsername,
     CreateUser,
-    loginUser
+    loginUser,
+    deleteUser
 }
