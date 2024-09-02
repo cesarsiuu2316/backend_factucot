@@ -27,12 +27,12 @@ const getFacturaById = (id) => {
 };
 
 const createFactura = (facturaData) => {
-    const { fecha_creacion, id_user, id_lista, total, totalNeto, descuento, impuesto, RTN, NombreCliente } = facturaData;
+    const { fecha_creacion, id_user, id_lista, total, total_neto, descuento, impuesto, rtn, nombre_cliente } = facturaData;
     return new Promise((resolve, reject) => {
         db.query(
             `INSERT INTO "factura" (fecha_creacion, id_user, id_lista, total, total_neto, descuento, impuesto, rtn, nombre_cliente)
              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id_factura`,
-            [fecha_creacion, id_user, id_lista, total, totalNeto, descuento, impuesto, RTN, NombreCliente],
+            [fecha_creacion, id_user, id_lista, total, total_neto, descuento, impuesto, rtn, nombre_cliente],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -45,12 +45,12 @@ const createFactura = (facturaData) => {
 };
 
 const updateFactura = (id, facturaData) => {
-    const { fecha_creacion, id_user, id_lista, total, totalNeto, descuento, impuesto, RTN, NombreCliente } = facturaData;
+    const { fecha_creacion, id_user, id_lista, total, total_neto, descuento, impuesto, rtn, nombre_cliente } = facturaData;
     return new Promise((resolve, reject) => {
         db.query(
             `UPDATE "factura" SET fecha_creacion = $1, id_user = $2, id_lista = $3, total = $4, total_neto = $5, descuento = $6, impuesto = $7, rtn = $8, nombre_cliente = $9
              WHERE id_factura = $10`,
-            [fecha_creacion, id_user, id_lista, total, totalNeto, descuento, impuesto, RTN, NombreCliente, id],
+            [fecha_creacion, id_user, id_lista, total, total_neto, descuento, impuesto, rtn, nombre_cliente, id],
             (err, results) => {
                 if (err) {
                     reject(err);
