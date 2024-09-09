@@ -32,7 +32,7 @@ const AsignarPrivilegios = (PrivelgiosData) => {
     const {id_privilegios, id_user } = PrivelgiosData;
     return new Promise((resolve, reject) => {
         db.query(
-            'INSERT INTO "Privilegios_Asignados" (id_Privilegios, id_user) VALUES ($1, $2) RETURNING id_privilegios',
+            'INSERT INTO "Privilegios_Asignados" (id_Privilegios, id_user) VALUES ($1, $2) RETURNING id_Privilegios',
             [id_privilegios, id_user],
             (err, result) => {
                 if (err) {
