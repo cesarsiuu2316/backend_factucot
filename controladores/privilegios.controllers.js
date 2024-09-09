@@ -30,9 +30,9 @@ const getPrivilegiosByUser = async (req, res) => {
 };
 
 const deletePrivilegios = async (req, res) => {
-    const {id_privilegios, id_producto} = req.params;
+    const {id_privilegios, id_user} = req.params;
     try {
-        await PrivilegiosService.deletePrivilegios(id_privilegios, id_producto);
+        await PrivilegiosService.QuitarPrivilegios(id_privilegios, id_user);
         res.status(204).send();
     } catch (err) {
         res.status(500).send(err.message);

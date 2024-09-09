@@ -12,11 +12,15 @@ const getAllPrivilegios = () => {
     });
 };
 
-const getAllPrivilegiosOfUser = ( id_user) => {
+const getAllPrivilegiosOfUser = (id_user) => {
+   
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM "Privilegios_Asignados" WHERE "id_user" = $1',[id_user], (err, results) => {
+        db.query('SELECT * FROM "Privilegios_Asignados" WHERE id_user = $1',[id_user], (err, results) => {
             if (err) {
                 reject(err);
+            } else if (results==null) {
+                console.log("No se encontraron privilegios asignados.");
+                resolve([]); 
             } else {
                 resolve(results);
             }
@@ -28,13 +32,13 @@ const AsignarPrivilegios = (PrivelgiosData) => {
     const {id_privilegios, id_user } = PrivelgiosData;
     return new Promise((resolve, reject) => {
         db.query(
-            'INSERT INTO "Asignar_Privilegios" (id_privilegios, id_user) VALUES ($1, $2) RETURNING id_privilegios',
+            'INSERT INTO "Privilegios_Asignados" (id_Privilegios, id_user) VALUES ($1, $2) RETURNING id_privilegios',
             [id_privilegios, id_user],
             (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve({ id_privilegios: result.rows[0].id_privilegios, id_user });
+                    resolve({ id_privilegios: result.id_privilegios, id_user: result.id_user });
                 }
             }
         );
@@ -43,7 +47,7 @@ const AsignarPrivilegios = (PrivelgiosData) => {
 
 const QuitarPrivilegios = (id_privilegios, id_user) => {
     return new Promise((resolve, reject) => {
-        db.query('DELETE FROM "Asignar_Privilegios" WHERE id_privilegios = $1 AND id_user = $2', [id_privilegios, id_user], (err, results) => {
+        db.query('DELETE FROM "Privilegios_Asignados" WHERE id_Privilegios = $1 AND id_user = $2', [id_privilegios, id_user], (err, results) => {
             if (err) {
                 reject(err);
             } else {

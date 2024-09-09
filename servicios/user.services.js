@@ -14,7 +14,7 @@ const getAllUsers = () => {
 
 const getUserbyId= (Id) =>{
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM "user" WHERE id_user = $1',[Id], (err, result) => {
+        db.query('SELECT * FROM user WHERE id_user = ',[Id], (err, result) => {
             if (err) {
                 reject(err);
             } else if(result.rows.lengths===0){
