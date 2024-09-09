@@ -1,13 +1,9 @@
 const db = require("../db");
 const knex = require("knex")({
-  client: "mysql",
-  connection: {
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "Bonny26062004",
-    database: "factucot-db",
-  },
+  client: "pg",
+  connection:
+    "postgresql://root:F9kwTt3HvqfHkaxxSK3tQMbpq6GGQRdF@dpg-cr56lkdumphs73e1au6g-a.oregon-postgres.render.com/factucot_bd",
+  searchPath: ["knex", "public"],
 });
 
 const getAllFacturas = () => {
