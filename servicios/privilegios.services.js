@@ -29,25 +29,25 @@ const getAllPrivilegiosOfUser = (id_user) => {
 };
 
 const AsignarPrivilegios = (PrivelgiosData) => {
-    const {id_privilegios, id_user } = PrivelgiosData;
+    const {id_Privilegios, id_user } = PrivelgiosData;
     return new Promise((resolve, reject) => {
         db.query(
-            'INSERT INTO "Privilegios_Asignados" (id_Privilegios, id_user) VALUES ($1, $2) RETURNING id_Privilegios',
-            [id_privilegios, id_user],
+            'INSERT INTO "Privilegios_Asignados"(id_Privilegios, id_user) VALUES ($1, $2)',
+            [id_Privilegios, id_user],
             (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve({ id_privilegios: result.id_privilegios, id_user: result.id_user });
+                    resolve({ id_Privilegios: result.id_Privilegios, id_user: result.id_user });
                 }
             }
         );
     });
 };
 
-const QuitarPrivilegios = (id_privilegios, id_user) => {
+const QuitarPrivilegios = (id_Privilegios, id_user) => {
     return new Promise((resolve, reject) => {
-        db.query('DELETE FROM "Privilegios_Asignados" WHERE id_Privilegios = $1 AND id_user = $2', [id_privilegios, id_user], (err, results) => {
+        db.query('DELETE FROM "Privilegios_Asignados" WHERE id_Privilegios = $1 AND id_user = $2', [id_Privilegios, id_user], (err, results) => {
             if (err) {
                 reject(err);
             } else {
