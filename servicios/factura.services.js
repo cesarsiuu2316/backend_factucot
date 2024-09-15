@@ -1,8 +1,13 @@
 const db = require("../db");
 const knex = require("knex")({
   client: "pg",
-  connection:
-    "postgresql://root:F9kwTt3HvqfHkaxxSK3tQMbpq6GGQRdF@dpg-cr56lkdumphs73e1au6g-a.oregon-postgres.render.com/factucot_bd",
+  connection: {
+    connectionString:
+      "postgresql://root:F9kwTt3HvqfHkaxxSK3tQMbpq6GGQRdF@dpg-cr56lkdumphs73e1au6g-a.oregon-postgres.render.com/factucot_bd",
+    ssl: {
+      rejectUnauthorized: false, // Set this to true if you have a valid SSL certificate
+    },
+  },
   searchPath: ["knex", "public"],
 });
 
