@@ -94,22 +94,20 @@ const updateFactura = (id, facturaData) => {
     id_lista,
     total,
     total_neto,
-    descuento,
     impuesto,
     rtn,
     nombre_cliente,
   } = facturaData;
   return new Promise((resolve, reject) => {
     db.query(
-      `UPDATE "factura" SET fecha_creacion = $1, id_user = $2, id_lista = $3, total = $4, total_neto = $5, descuento = $6, impuesto = $7, rtn = $8, nombre_cliente = $9
-             WHERE id_factura = $10`,
+      `UPDATE "factura" SET fecha_creacion = $1, id_user = $2, id_lista = $3, total = $4, total_neto = $5, impuesto = $6, rtn = $7, nombre_cliente = $8
+             WHERE id_factura = $9`,
       [
         fecha_creacion,
         id_user,
         id_lista,
         total,
         total_neto,
-        descuento,
         impuesto,
         rtn,
         nombre_cliente,
