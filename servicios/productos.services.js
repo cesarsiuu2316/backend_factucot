@@ -13,8 +13,8 @@ const getAllProductos = () => {
 };
 
 const getProductoById = (id) => {
-  console.log("Hola, si funciona");
   return new Promise((resolve, reject) => {
+    console.log("Hola, si funciona");
     db.query(
       "SELECT * FROM producto WHERE id_producto = $1",
       [id],
