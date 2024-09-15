@@ -46,7 +46,7 @@ const createFactura = async (facturaData) => {
   const seconds = String(now.getSeconds()).padStart(2, "0");
   const mysqlDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
-  const { rtn, nombre_cliente } = facturaData;
+  const { rtn, nombre_cliente, total, total_neto, impuesto } = facturaData;
   const result = await knex("lista").max("id_lista as max").first();
   const maxValue = result.max || 0;
   const nextValue = maxValue + 1;
@@ -57,18 +57,24 @@ const createFactura = async (facturaData) => {
     id_lista: nextValue,
     RTN: rtn,
     NombreCliente: nombre_cliente,
+    Total: total,
+    Totalneto: total_neto,
+    Impuesto: impuesto,
   };
 
   return new Promise((resolve, reject) => {
     db.query(
-      `INSERT INTO "factura" (fecha_creacion, id_user, id_lista, rtn, nombre_cliente)
-             VALUES ($1, $2, $3, $4, $5) RETURNING id_factura`,
+      `INSERT INTO "factura" (fecha_creacion, id_user, id_lista, rtn, nombre_cliente, total, total_neto, impuesto)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id_factura`,
       [
         data.fecha_creacion,
         data.id_user,
         data.id_lista,
         data.RTN,
         data.NombreCliente,
+        data.Total,
+        data.Totalneto,
+        data.Impuesto,
       ],
       (err, result) => {
         if (err) {
