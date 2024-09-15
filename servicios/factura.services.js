@@ -58,7 +58,7 @@ const createFactura = async (facturaData) => {
 
   const data = {
     fecha_creacion: mysqlDateTime,
-    id_user: "0501",
+    id_user: "2",
     id_lista: nextValue,
     RTN: rtn,
     NombreCliente: nombre_cliente,
