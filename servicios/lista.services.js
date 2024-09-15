@@ -52,11 +52,11 @@ const getListaById = (id_lista) => {
 };
 
 const createLista = (listaData) => {
-  const { id_producto, cantidad } = listaData;
+  const { id_lista, id_producto, cantidad } = listaData;
   return new Promise((resolve, reject) => {
     db.query(
-      'INSERT INTO "lista" (id_producto, cantidad) VALUES ($1, $2) RETURNING id_lista',
-      [id_producto, cantidad],
+      'INSERT INTO "lista" (id_lista, id_producto, cantidad) VALUES ($1, $2, $3) RETURNING id_lista',
+      [id_lista, id_producto, cantidad],
       (err, result) => {
         if (err) {
           reject(err);
