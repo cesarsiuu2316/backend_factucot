@@ -24,12 +24,12 @@ const getProductosVendidosPorFecha = async (req, res) => {
     try {
         const productos = await reporteService.getProductosVendidosPorFechas(fecha1, fecha2); 
         if (productos && productos.length > 0) {
-            res.json(productos); 
+            res.status(200).json(productos); 
         } else {
-            res.status(404).send('No se vendieron productos entre estas fechas'); 
+            res.status(200).json({ message: 'No se vendieron productos entre estas fechas' }); 
         }
     } catch (err) {
-        res.status(500).send(err.message); 
+        res.status(500).json({ error: err.message }); 
     }
 };
 
@@ -38,12 +38,12 @@ const getFacturasPorFechas = async (req, res) => {
     try {
         const facturas = await reporteService.getFacturasPorFecha(fecha1, fecha2); 
         if (facturas && facturas.length > 0) {
-            res.json(facturas); 
+            res.status(200).json(facturas); 
         } else {
-            res.status(404).send('No hay facturas entre estas fechas'); 
+            res.status(200).json({ message: 'No hay facturas entre estas fechas' }); 
         }
     } catch (err) {
-        res.status(500).send(err.message); 
+        res.status(500).json({ error: err.message }); 
     }
 };
 
@@ -52,12 +52,12 @@ const getCotizacionesPorFechas = async (req, res) => {
     try {
         const cotizaciones = await reporteService.getCotizacionesPorFecha(fecha1, fecha2); 
         if (cotizaciones && cotizaciones.length > 0) {
-            res.json(cotizaciones); 
+            res.status(200).json(cotizaciones); 
         } else {
-            res.status(404).send('No hay cotizaciones entre estas fechas'); 
+            res.status(200).json({ message: 'No hay cotizaciones entre estas fechas' }); 
         }
     } catch (err) {
-        res.status(500).send(err.message); 
+        res.status(500).json({ error: err.message }); 
     }
 };
 
