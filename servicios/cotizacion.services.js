@@ -41,8 +41,8 @@ const getCotizacionById = (id) => {
   });
 };
 
-const createCotizacion = (cotizacionData) => {
-    const now = new Date();
+const createCotizacion = async (cotizacionData) => {
+  const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, "0");
   const day = String(now.getDate()).padStart(2, "0");
@@ -51,7 +51,8 @@ const createCotizacion = (cotizacionData) => {
   const seconds = String(now.getSeconds()).padStart(2, "0");
   const mysqlDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
-  const { nombre_cliente, fecha_vencimiento, total, total_neto, impuesto } = cotizacionData;
+  const { nombre_cliente, fecha_vencimiento, total, total_neto, impuesto } =
+    cotizacionData;
   const result = await knex("lista").max("id_lista as max").first();
   const maxValue = result.max || 0;
   const nextValue = maxValue + 1;
