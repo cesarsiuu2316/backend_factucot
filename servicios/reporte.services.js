@@ -70,10 +70,72 @@ const getProductosVendidosPorFechas = (fechaInicio, fechaFin) => {
     });
 };
 
+const getFacturasPorFecha = (fechaInicio, fechaFin) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT 
+                p.id_producto,
+                p.nombre,
+                COALESCE(SUM(l.cantidad), 0) AS total_vendidos,
+                COALESCE(SUM(l.cantidad * p.precio), 0) AS total_ganado
+            FROM 
+                producto p
+            JOIN 
+                lista l ON p.id_producto = l.id_producto
+            LEFT JOIN 
+                factura f ON l.id_lista = f.id_lista
+            WHERE 
+                (f.fecha_creacion BETWEEN $1 AND $2 OR f.id_lista IS NULL)
+            GROUP BY 
+                p.id_producto, p.nombre
+            ORDER BY 
+                total_vendidos DESC;
+        `;        
+        db.query(query, [fechaInicio, fechaFin], (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    });
+};
 
+const getCotizacionesPorFecha = (fechaInicio, fechaFin) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT 
+                c.id_producto,
+                p.nombre,
+                COALESCE(SUM(l.cantidad), 0) AS total_vendidos,
+                COALESCE(SUM(l.cantidad * p.precio), 0) AS total_ganado
+            FROM 
+                cotizacion c
+            JOIN 
+                lista l ON p.id_producto = l.id_producto
+            LEFT JOIN 
+                factura f ON l.id_lista = f.id_lista
+            WHERE 
+                (f.fecha_creacion BETWEEN $1 AND $2 OR f.id_lista IS NULL)
+            GROUP BY 
+                p.id_producto, p.nombre
+            ORDER BY 
+                total_vendidos DESC;
+        `;        
+        db.query(query, [fechaInicio, fechaFin], (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    });
+};
 
 module.exports = {
     getTopStarUsers,
     getTotalVentas,
-    getProductosVendidosPorFechas
+    getProductosVendidosPorFechas,
+    getFacturasPorFecha,
+    getCotizacionesPorFecha
 };
