@@ -1,3 +1,4 @@
+const { get } = require('../rutas/user.routes');
 const reporteService = require('../servicios/reporte.services');
 
 const getStarUsers = async (req, res) => {
@@ -18,7 +19,52 @@ const getTotalVentas = async (req, res) => {
     }
 };
 
+const getProductosVendidosPorFecha = async (req, res) => {
+    const { fecha1, fecha2 } = req.params; 
+    try {
+        const productos = await reporteService.getProductosVendidosPorFechas(fecha1, fecha2); 
+        if (productos && productos.length > 0) {
+            res.status(200).json(productos); 
+        } else {
+            res.status(200).json({ message: 'No se vendieron productos entre estas fechas' }); 
+        }
+    } catch (err) {
+        res.status(500).json({ error: err.message }); 
+    }
+};
+
+const getFacturasPorFechas = async (req, res) => {
+    const { fecha1, fecha2 } = req.params; 
+    try {
+        const facturas = await reporteService.getFacturasPorFecha(fecha1, fecha2); 
+        if (facturas && facturas.length > 0) {
+            res.status(200).json(facturas); 
+        } else {
+            res.status(200).json({ message: 'No hay facturas entre estas fechas' }); 
+        }
+    } catch (err) {
+        res.status(500).json({ error: err.message }); 
+    }
+};
+
+const getCotizacionesPorFechas = async (req, res) => {
+    const { fecha1, fecha2 } = req.params; 
+    try {
+        const cotizaciones = await reporteService.getCotizacionesPorFecha(fecha1, fecha2); 
+        if (cotizaciones && cotizaciones.length > 0) {
+            res.status(200).json(cotizaciones); 
+        } else {
+            res.status(200).json({ message: 'No hay cotizaciones entre estas fechas' }); 
+        }
+    } catch (err) {
+        res.status(500).json({ error: err.message }); 
+    }
+};
+
 module.exports = {
     getStarUsers,
-    getTotalVentas
+    getTotalVentas,
+    getProductosVendidosPorFecha,
+    getFacturasPorFechas,
+    getCotizacionesPorFechas
 };
