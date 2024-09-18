@@ -57,9 +57,21 @@ const QuitarPrivilegios = (id_Privilegios, id_user) => {
     });
 };
 
+const QuitarPrivilegiosDeUser = ( id_user) => {
+    return new Promise((resolve, reject) => {
+        db.query('DELETE FROM "Privilegios_Asignados" WHERE id_user = $1', [id_user], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+};
 module.exports = {
     AsignarPrivilegios,
     QuitarPrivilegios,
     getAllPrivilegios,
-    getAllPrivilegiosOfUser
+    getAllPrivilegiosOfUser,
+    QuitarPrivilegiosDeUser
 };

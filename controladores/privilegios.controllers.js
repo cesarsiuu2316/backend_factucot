@@ -39,11 +39,22 @@ const deletePrivilegios = async (req, res) => {
     }
 };
 
+const deletePrivilegiosUser = async (req, res) => {
+    const {id_user} = req.params;
+    try {
+        await PrivilegiosService.QuitarPrivilegiosDeUser( id_user);
+        res.status(204).send();
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
 
 
 module.exports = {
     getPrivilegios,
     createPrivilegios,
     getPrivilegiosByUser,
-    deletePrivilegios
+    deletePrivilegios,
+    deletePrivilegiosUser
 };
